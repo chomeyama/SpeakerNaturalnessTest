@@ -41,9 +41,9 @@ function start_experiment() {
     var methods = [];
     methods.push(wav_dir + "world/");
     methods.push(wav_dir + "usfgan/");
-    methods.push(wav_dir + "usfgan2-mel/");
+    methods.push(wav_dir + "usfgan2/");
 
-    var rands = pickN(0, n_utt, 10 * 2);
+    var rands = pickN(0, n_utt, 6 * 2);
 
     file_list = makeFileList(methods, rands);
     outfile = name + ".csv";
@@ -73,14 +73,23 @@ function loadText(filename) {
 function makeFileList(methods, rands) {
     var files = new Array();
     var names = loadText(wavnames);
-    for (var i = 0; i < methods.length; i++) {
-        for (var j = 0; j < rands.length / 2; j++) {
-            pair = ["wav/natural/" + names[rands[j * 2]] + ".wav", methods[i] + names[rands[j * 2]] + "_f2.00.wav"];
-            pair.shuffle();
-            files.push(pair);
-            pair = ["wav/natural/" + names[rands[j * 2 + 1]] + ".wav", methods[i] + names[rands[j * 2 + 1]] + "_f0.50.wav"];
-            pair.shuffle();
-            files.push(pair);
+    for (var i = 0; i < rands.length / 2; i++) {
+        xab = [
+            ["wav/natural/" + names[rands[i * 2]] + ".wav", methods[0] + names[rands[i * 2]] + "_f0.50.wav", methods[1] + names[rands[i * 2]] + "_f0.50.wav"],
+            ["wav/natural/" + names[rands[i * 2]] + ".wav", methods[0] + names[rands[i * 2]] + "_f0.50.wav", methods[2] + names[rands[i * 2]] + "_f0.50.wav"],
+            ["wav/natural/" + names[rands[i * 2]] + ".wav", methods[1] + names[rands[i * 2]] + "_f0.50.wav", methods[2] + names[rands[i * 2]] + "_f0.50.wav"],
+            ["wav/natural/" + names[rands[i * 2]] + ".wav", methods[1] + names[rands[i * 2]] + "_f0.50.wav", methods[0] + names[rands[i * 2]] + "_f0.50.wav"],
+            ["wav/natural/" + names[rands[i * 2]] + ".wav", methods[2] + names[rands[i * 2]] + "_f0.50.wav", methods[0] + names[rands[i * 2]] + "_f0.50.wav"],
+            ["wav/natural/" + names[rands[i * 2]] + ".wav", methods[2] + names[rands[i * 2]] + "_f0.50.wav", methods[1] + names[rands[i * 2]] + "_f0.50.wav"],
+            ["wav/natural/" + names[rands[i * 2 + 1]] + ".wav", methods[0] + names[rands[i * 2 + 1]] + "_f2.00.wav", methods[1] + names[rands[i * 2 + 1]] + "_f2.00.wav"],
+            ["wav/natural/" + names[rands[i * 2 + 1]] + ".wav", methods[0] + names[rands[i * 2 + 1]] + "_f2.00.wav", methods[2] + names[rands[i * 2 + 1]] + "_f2.00.wav"],
+            ["wav/natural/" + names[rands[i * 2 + 1]] + ".wav", methods[1] + names[rands[i * 2 + 1]] + "_f2.00.wav", methods[2] + names[rands[i * 2 + 1]] + "_f2.00.wav"],
+            ["wav/natural/" + names[rands[i * 2 + 1]] + ".wav", methods[1] + names[rands[i * 2 + 1]] + "_f2.00.wav", methods[0] + names[rands[i * 2 + 1]] + "_f2.00.wav"],
+            ["wav/natural/" + names[rands[i * 2 + 1]] + ".wav", methods[2] + names[rands[i * 2 + 1]] + "_f2.00.wav", methods[0] + names[rands[i * 2 + 1]] + "_f2.00.wav"],
+            ["wav/natural/" + names[rands[i * 2 + 1]] + ".wav", methods[2] + names[rands[i * 2 + 1]] + "_f2.00.wav", methods[1] + names[rands[i * 2 + 1]] + "_f2.00.wav"],
+        ];
+        for (var j = 0; j < xab.length; j++) {
+            files.push(xab[j]);
         }
     }
     files.shuffle();
@@ -90,13 +99,18 @@ function makeFileList(methods, rands) {
 function setAudio() {
     document.getElementById("page").textContent = "" + (n + 1) + "/" + scores.length;
 
-    document.getElementById("audio_a").innerHTML = 'Voice A<br>'
+    document.getElementById("audio_x").innerHTML = 'Voice X<br>'
         + '<audio src="' + file_list[n][0]
         + '" controls preload="auto">'
         + '</audio>';
 
-    document.getElementById("audio_b").innerHTML = 'Voice B<br>'
+    document.getElementById("audio_a").innerHTML = 'Voice A<br>'
         + '<audio src="' + file_list[n][1]
+        + '" controls preload="auto">'
+        + '</audio>';
+
+    document.getElementById("audio_b").innerHTML = 'Voice B<br>'
+        + '<audio src="' + file_list[n][2]
         + '" controls preload="auto">'
         + '</audio>';
 }
@@ -153,7 +167,7 @@ function setButton() {
 function evaluation() {
     for (var i = 0; i < eval.length; i++) {
         if (eval[i].checked) {
-            scores[n] = 5 - i;
+            scores[n] = i;
         }
     }
     setButton();

@@ -27,8 +27,9 @@
             <ol>
                 <li>Enter your name and area you live.</li>
                 <li>Press "start" button.</li>
-                <li>Listen to the displayed audio and give it the rating you think it deserves.<br>
-                    The evaluation criteria is <b>how much X and Y sounds natural as the same speaker's voice.</b>.</li>
+                <li>Listen to displayed 3 audio: X, A, B.<br>
+                    Assuming that the same speaker as X speaks, which is more natural and has higher sound quality, A or
+                    B?</b></li>
                 <li>Press "next" button and start next evaluation.</li>
                 <li>When you finish the last evaluation, press "finish" button and download the result.<br>
                     Send it to Slack or the following email address.</li>
@@ -52,8 +53,8 @@
             <ol>
                 <li>名前と出身地を入力して下さい。</li>
                 <li>"start"ボタンを押して下さい。</li>
-                <li>2つの音声X、Yが表示されます。<br>
-                    音声Xに対し、音声Yが「同じ話者の音声として、どれくらい自然に聴こえるか」を5段階で評価して下さい。</li>
+                <li>3つの音声X、A、Bが表示されます。<br>
+                    Xと同じ話者が発話したと仮定して、AとBのどちらが自然で音質が良いかを評価して下さい。</li>
                 <li>選択を終えたら"next"ボタンを押し、次の実験に進んで下さい。</li>
                 <li>評価実験を全て終えたら"finish"ボタンを押して結果をダウンロードして下さい。<br>
                     結果はSlackか下記のメールアドレスに送信して下さい。</li>
@@ -89,13 +90,12 @@
 
         <div id="Display2" style="display:none;">
             <p id="page"></p>
+            <p id="audio_x"></p>
             <p id="audio_a"></p>
             <p id="audio_b"></p>
             <p>
-                <label><input type="radio" name="eval" onclick="evaluation()">Very natural</label><br>
-                <label><input type="radio" name="eval" onclick="evaluation()">Natural</label><br>
-                <label><input type="radio" name="eval" onclick="evaluation()">A little natural</label><br>
-                <label><input type="radio" name="eval" onclick="evaluation()">Unnatural</label><br>
+                <label><input type="radio" name="eval" onclick="evaluation()">A</label><br>
+                <label><input type="radio" name="eval" onclick="evaluation()">B</label><br>
             </p>
 
             <p>
