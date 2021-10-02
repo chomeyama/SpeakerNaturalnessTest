@@ -43,7 +43,7 @@ function start_experiment() {
     methods.push(wav_dir + "usfgan/");
     methods.push(wav_dir + "usfgan2/");
 
-    var rands = pickN(0, n_utt, 6 * 2);
+    var rands = pickN(0, n_utt, 5 * 2);
 
     file_list = makeFileList(methods, rands);
     outfile = name + ".csv";
